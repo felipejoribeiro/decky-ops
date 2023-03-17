@@ -1,0 +1,52 @@
+{
+  "tasks": [
+    {
+      "name": "pnpmsetup",
+      "tags": ["build"],
+      "cwd": "${config_dir}",
+      "cmd": "ls && pnpm i"
+    },
+    {
+      "name": "updatefrontendlib",
+      "tags": ["update"],
+      "cwd": "${config_dir}",
+      "cmd": "pnpm update decky-frontend-lib --latest"
+    },
+    {
+      "name": "build",
+      "tags": ["build"], 
+      "cwd": "${config_dir}",
+      "cmd": "pnpm run build"
+    },
+    {
+      "name": "watch",
+      "tags": ["build"], 
+      "cwd": "${config_dir}",
+      "cmd": "pnpm run watch"
+    },
+    {
+      "name": "setup|build",
+      "tags": ["build", "setup"],
+      "cwd": "${config_dir}",
+      "cmd": "pnpm i && pnpm run build"
+    },
+    {
+      "name": "chmodfolders",
+      "tags": ["remote"],
+      "cwd": "${config_dir}",
+      "cmd": "ssh deck@192.168.1.11 -i /home/fejori/.ssh/id_rsa 'echo 11235813 | sudo -S chmod -R ug+rw /home/deck/homebrew/'"
+    },
+    {
+      "name": "restartloader",
+      "tags": ["remote"],
+      "cwd": "${config_dir}",
+      "cmd": "ssh deck@192.168.1.11 -i /home/fejori/.ssh/id_rsa 'echo 11235813 | sudo -S systemctl restart plugin_loader'"
+    },
+    {
+      "name": "deploy",
+      "tags": ["remote"],
+      "cwd": "${config_dir}",
+      "cmd": "rsync -azp --delete --chmod=D0755,F0755 --rsh='ssh -i /home/fejori/.ssh/id_rsa' --exclude='.git/' --exclude='.github/' --exclude='.vscode/' --exclude='node_modules/' --exclude='src/' --exclude='*.log' --exclude='.gitignore' . deck@192.168.1.11:/home/deck/homebrew/plugins/decky-ops"
+    }
+  ]
+}
